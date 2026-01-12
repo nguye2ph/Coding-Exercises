@@ -7,13 +7,31 @@ FROM
 WHERE 
     program_status = 'INACTIVE'
 
---pandas 
+#pandas 
 
-# Import your libraries
 import pandas as pd
-
-# Start writing code
 los_angeles_restaurant_health_inspections[los_angeles_restaurant_health_inspections['program_status'] == 'INACTIVE']
 
+-- salary difference 
+
+select 
+ABS(MAX(CASE WHEN d.department = 'engineering'
+THEN e.salary ELSE 0 END) - MAX(CASE WHEN d.department = 'marketing'
+THEN e.salary ELSE 0 END))
+AS salary_difference
+from db_employee e
+JOIN db_dept d
+ON e.department_id = d.id
+;
+
+# Pandas 
+import pandas as pd
+
+db_employee.head()
+db_employee_dept = db_employee.merge(db_dept, how = 'left', left_on = 'department_id', right_on = 'id')
+db_employee_dept.head()
+highest_marketing = db_employee_dept.loc[db_employee_dept['department'] == 'marketing','salary'].max()
+highest_engineering = db_employee_dept.loc[db_employee_dept['department'] == 'engineering','salary'].max()
+highest_marketing - highest_engineering
 
 
