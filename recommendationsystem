@@ -18,4 +18,13 @@ AND upp.page_id = up.page_id
 )
 ;
 
--- Pandas
+--Pandas
+
+
+friends_pages = users_friends.merge(users_pages, left_on='friend_id', right_on='user_id')
+friends_pages = friends_pages[['user_id_x', 'page_id']]
+comparison = friends_pages.merge(users_pages, how='left', left_on=['user_id_x', 'page_id'], right_on=['user_id', 'page_id'])
+result = comparison[comparison['user_id'].isna()][['user_id_x', 'page_id']].drop_duplicates()
+result = result.rename(columns={'user_id_x': 'user_id'})
+
+
