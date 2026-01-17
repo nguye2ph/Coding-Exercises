@@ -75,6 +75,22 @@ select_months = transactions[(transactions["month"].isin([4, 5]))]
 result = select_months["signup_id"].unique()
 
 
+## airbnb sanfrancisco
+
+select *
+from airbnb_search_details
+WHERE cancellation_policy = 'flexible'
+AND review_scores_rating IS NOT NULL
+AND city = 'SF'
+ORDER BY review_scores_rating DESC;
+
+import pandas as pd
+import numpy as np
+
+SF_searches = airbnb_search_details[(airbnb_search_details['city'] == 'SF') & (airbnb_search_details['cancellation_policy'] == 'flexible')
+                                    & (airbnb_search_details['review_scores_rating'].notnull()) ]
+result = SF_searches.sort_values(['review_scores_rating'],ascending = False)
+
 
 
 
