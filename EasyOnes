@@ -283,4 +283,19 @@ SELECT
 FROM oscar_nominees
 WHERE 
     nominee = 'Abigail Breslin'
---distinct count vs count distinct
+--count distinct not distinct count
+--COUNT(column) executes first - it aggregates and counts all rows
+--DISTINCT is applied second - it tries to remove duplicates from the result set
+
+--doesn't work with window function though might need to use subquery and row_number()
+
+WITH distinct_movies AS (
+    SELECT DISTINCT 
+        nominee, 
+        movie
+    FROM oscar_nominees
+)
+SELECT 
+    nominee,
+    COUNT(*) OVER (PARTITION BY nominee) AS n_distinct_movies
+FROM distinct_movies
